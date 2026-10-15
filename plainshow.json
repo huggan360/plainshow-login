@@ -1,0 +1,21 @@
+{
+    "id": "login",
+    "name": "Login",
+    "description": "Single sign-on for every PlainShow app.",
+    "icon": "bx-lock-alt",
+    "version": "0.1.0",
+    "url": "https://login.plainshow.se",
+    "system": true,
+    "health": "/up",
+    "update": {
+        "repository": "https://github.com/huggan360/plainshow-login.git",
+        "shared": [".env", "storage"],
+        "steps": [
+            "composer install --no-dev --optimize-autoloader --no-interaction",
+            "php artisan migrate --force",
+            "php artisan config:cache",
+            "php artisan route:cache",
+            "php artisan view:cache"
+        ]
+    }
+}
