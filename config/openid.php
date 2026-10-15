@@ -13,7 +13,7 @@ return [
 
     // Claims released for the `plainshow` scope, on top of the standard sets.
     'custom_claim_sets' => [
-        'plainshow' => ['ps_role', 'ps_services', 'ps_caps', 'ps_pi_user'],
+        'plainshow' => ['ps_role', 'ps_services', 'ps_caps', 'ps_pi_user', 'ps_cloud_uid'],
     ],
 
     'repositories' => [

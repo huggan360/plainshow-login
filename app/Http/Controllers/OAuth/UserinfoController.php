@@ -24,7 +24,7 @@ class UserinfoController extends Controller
         $sets = [
             'profile' => ['name', 'given_name', 'family_name', 'preferred_username', 'picture', 'updated_at'],
             'email' => ['email', 'email_verified'],
-            'plainshow' => ['ps_role', 'ps_services', 'ps_caps', 'ps_pi_user'],
+            'plainshow' => ['ps_role', 'ps_services', 'ps_caps', 'ps_pi_user', 'ps_cloud_uid'],
         ];
         foreach ($sets as $scope => $names) {
             if (in_array($scope, $scopes, true)) {

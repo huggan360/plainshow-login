@@ -39,7 +39,8 @@ class LogoutController extends Controller
 
         return view('auth.logout', [
             'frames' => $frames,
-            'return' => ReturnUrl::or($request->query('return'), route('login')),
+            // `post_logout_redirect_uri` is the OIDC name; Nextcloud sends it.
+            'return' => ReturnUrl::or($request->query('return') ?? $request->query('post_logout_redirect_uri'), route('login')),
         ]);
     }
 }
