@@ -16,7 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "pragmarx/google2fa": "^9.1",
         "ronvanderheijden/openid-connect": "^1.2",
-        "plainshow/kit": "^0.1"
+        "plainshow/kit": "^0.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -74,7 +74,8 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ]
+        ],
+        "check-type": "check-type public/css"
     },
     "extra": {
         "laravel": {
