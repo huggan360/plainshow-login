@@ -12,7 +12,7 @@
         @endif
     </h1>
 
-    <div class="ps-frame auth__frame" data-glow="{{ $destination['glow'] ?? 'blue' }}">
+    <div class="ps-frame auth__frame" data-glow="{{ $destination['glow'] ?? 'accent' }}">
         <div class="ps-frame__panel">
             @if ($status)
                 <div class="ps-alert ps-alert--success auth__alert" role="status"><i class="bx bx-check-circle"></i><span>{{ $status }}</span></div>

@@ -5,7 +5,7 @@
 @section('content')
     <h1 class="ps-title auth__title">Confirm it is you</h1>
 
-    <div class="ps-frame auth__frame" data-glow="violet">
+    <div class="ps-frame auth__frame" data-glow="accent">
         <div class="ps-frame__panel">
             <p class="auth__lead">Enter the 6-digit code from your authenticator app, or one of your recovery codes.</p>
             <form method="post" action="{{ url('/two-factor') }}" novalidate>

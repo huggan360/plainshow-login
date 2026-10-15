@@ -7,7 +7,7 @@ use App\Models\OAuthClient;
 /** Which app someone is signing in to, read from the pending authorize request. */
 class Destination
 {
-    private const GLOW = ['core' => 'blue', 'blog' => 'warm', 'latex' => 'green', 'web' => 'violet', 'cloud' => 'cyan'];
+    private const GLOW = ['core' => 'accent', 'blog' => 'warm', 'latex' => 'green', 'web' => 'violet', 'cloud' => 'cyan'];
 
     /** @return array{name: string, glow: string}|null */
     public static function fromIntended(): ?array
@@ -22,6 +22,6 @@ class Destination
             return null;
         }
 
-        return ['name' => $client->name, 'glow' => self::GLOW[$client->extension_id] ?? 'blue'];
+        return ['name' => $client->name, 'glow' => self::GLOW[$client->extension_id] ?? 'accent'];
     }
 }
