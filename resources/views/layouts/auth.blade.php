@@ -7,12 +7,14 @@
     <meta name="robots" content="noindex">
     <meta name="color-scheme" content="dark light">
     <title>@yield('title', 'Sign in') | PlainShow</title>
-    <link rel="icon" href="/ui/brand/favicon.ico" sizes="any">
-    <link rel="icon" href="/ui/brand/plainshow-icon.webp" type="image/webp">
-    <link rel="apple-touch-icon" href="/ui/brand/apple-touch-icon.png">
+    <link rel="icon" href="/ui/brand/favicon.ico?v={{ $uiVersion }}" sizes="any">
+    <link rel="icon" href="/ui/brand/plainshow-icon.webp?v={{ $uiVersion }}" type="image/webp">
+    <link rel="apple-touch-icon" href="/ui/brand/apple-touch-icon.png?v={{ $uiVersion }}">
+    <link rel="preload" href="/ui/fonts/source-serif-4-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/ui/fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/ui/css/boxicons.css?v={{ $uiVersion }}">
     <link rel="stylesheet" href="/ui/css/plainshow.css?v={{ $uiVersion }}">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/login.css?v={{ $uiVersion }}">
     <script src="/ui/js/plainshow.js?v={{ $uiVersion }}" defer></script>
     @stack('head')
 </head>
@@ -20,8 +22,7 @@
     <div class="auth__backdrop" aria-hidden="true"></div>
     <main class="auth__main">
         <a class="ps-brand auth__brand" href="{{ config('plainshow.core_url') }}">
-            <img class="ps-brand__icon" src="/ui/brand/plainshow-icon.webp" alt="">
-            <span class="ps-brand__word">plain<span class="ps-brand__show">show</span></span>
+            <img class="ps-brand__logo ps-brand__logo--lg" src="/ui/brand/plainshow-logo.webp?v={{ $uiVersion }}" alt="PlainShow" width="159" height="52">
         </a>
         @yield('content')
         <footer class="auth__foot">
