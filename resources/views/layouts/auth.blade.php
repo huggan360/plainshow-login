@@ -1,3 +1,4 @@
+@php($uiVersion = \Composer\InstalledVersions::getReference('plainshow/kit') ? substr(\Composer\InstalledVersions::getReference('plainshow/kit'), 0, 8) : 'dev')
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
@@ -9,10 +10,10 @@
     <link rel="icon" href="/ui/brand/favicon.ico" sizes="any">
     <link rel="icon" href="/ui/brand/plainshow-icon.webp" type="image/webp">
     <link rel="apple-touch-icon" href="/ui/brand/apple-touch-icon.png">
-    <link rel="stylesheet" href="/ui/css/boxicons.css">
-    <link rel="stylesheet" href="/ui/css/plainshow.css">
+    <link rel="stylesheet" href="/ui/css/boxicons.css?v={{ $uiVersion }}">
+    <link rel="stylesheet" href="/ui/css/plainshow.css?v={{ $uiVersion }}">
     <link rel="stylesheet" href="/css/login.css">
-    <script src="/ui/js/plainshow.js" defer></script>
+    <script src="/ui/js/plainshow.js?v={{ $uiVersion }}" defer></script>
     @stack('head')
 </head>
 <body class="ps auth">
