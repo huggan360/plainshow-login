@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- The sign-in page has the PlainShow glyph backdrop behind it, and glass frames (kit 1.3).
+
 ## 1.0.2
 
 - plainshow-kit 1.1.

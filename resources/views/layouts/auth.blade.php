@@ -16,9 +16,11 @@
     <link rel="stylesheet" href="/ui/css/plainshow.css?v={{ $uiVersion }}">
     <link rel="stylesheet" href="/css/login.css?v={{ $uiVersion }}">
     <script src="/ui/js/plainshow.js?v={{ $uiVersion }}" defer></script>
+    <script src="/ui/js/backdrop.js?v={{ $uiVersion }}" defer></script>
     @stack('head')
 </head>
 <body class="ps auth">
+    <canvas class="ps-backdrop" aria-hidden="true"></canvas>
     <main class="auth__main">
         <a class="ps-brand auth__brand" href="{{ config('plainshow.core_url') }}">
             <img class="ps-brand__logo ps-brand__logo--lg" src="/ui/brand/plainshow-logo.webp?v={{ $uiVersion }}" alt="PlainShow" width="159" height="52">
