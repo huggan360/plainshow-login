@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- The sign-in page is plain: no grid and no gradient behind it.
+
 ## 1.0.0
 
 - Personal API tokens, made for core's account page over signed requests: service scopes, read only if wanted, 90 days.

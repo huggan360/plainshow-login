@@ -19,7 +19,6 @@
     @stack('head')
 </head>
 <body class="ps auth">
-    <div class="auth__backdrop" aria-hidden="true"></div>
     <main class="auth__main">
         <a class="ps-brand auth__brand" href="{{ config('plainshow.core_url') }}">
             <img class="ps-brand__logo ps-brand__logo--lg" src="/ui/brand/plainshow-logo.webp?v={{ $uiVersion }}" alt="PlainShow" width="159" height="52">

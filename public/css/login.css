@@ -1,20 +1,5 @@
 /* Sign-in pages. Everything else comes from the PlainShow UI kit. */
 .auth { position: relative; overflow-x: hidden; }
-.auth__backdrop {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-        radial-gradient(42rem 28rem at 12% 8%, rgba(252, 80, 0, .11), transparent 70%),
-        radial-gradient(40rem 30rem at 92% 96%, rgba(255, 176, 87, .06), transparent 70%);
-}
-.auth__backdrop::after {
-    content: ''; position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(240, 239, 236, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(240, 239, 236, .03) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
-    mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
-}
-[data-theme='light'] .auth__backdrop::after { background-image: linear-gradient(rgba(31, 30, 29, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(31, 30, 29, .045) 1px, transparent 1px); }
-
 .auth__main {
     position: relative; z-index: 1;
     width: min(460px, 100%); min-height: 100vh; min-height: 100dvh;
