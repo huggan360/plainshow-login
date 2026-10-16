@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addHour());
         Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addDays(90));
 
         RateLimiter::for('login', fn (Request $request) => [
             Limit::perMinute(10)->by('ip:'.$request->ip()),

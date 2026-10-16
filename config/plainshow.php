@@ -2,6 +2,8 @@
 
 return [
     'core_url' => env('PLAINSHOW_CORE_URL', 'https://plainshow.se'),
+    // Shared with core for signed internal requests (personal API tokens).
+    'internal_secret' => env('PLAINSHOW_INTERNAL_SECRET', ''),
 
     // Where people may be sent back to after signing in or out.
     'return_hosts' => ['plainshow.se', '*.plainshow.se'],

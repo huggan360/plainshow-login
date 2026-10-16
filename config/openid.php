@@ -8,6 +8,12 @@ return [
             'profile' => 'Your name, username and picture',
             'email' => 'Your email address',
             'plainshow' => 'Your PlainShow role and access',
+            // Personal API tokens: which services the token reaches, and whether it may change anything.
+            'core' => 'The dashboard API',
+            'blog' => 'The blog API',
+            'split' => 'The Split API',
+            'latex' => 'The LaTeX API',
+            'read-only' => 'Read only',
         ],
     ],
 
