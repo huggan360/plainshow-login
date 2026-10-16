@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- plainshow-kit 1.1.
+
 ## 1.0.1
 
 - The sign-in page is plain: no grid and no gradient behind it.
