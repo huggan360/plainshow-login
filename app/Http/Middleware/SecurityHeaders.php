@@ -30,7 +30,7 @@ class SecurityHeaders
             "connect-src 'self'",
             $frames,
             "frame-ancestors 'none'",
-            "form-action 'self' https://plainshow.se https://*.plainshow.se",
+            "form-action 'self' https://plainshow.se https://*.plainshow.se".($request->is('devices/connect') ? ' nc:' : ''),
             "base-uri 'none'",
             "object-src 'none'",
         ]));
