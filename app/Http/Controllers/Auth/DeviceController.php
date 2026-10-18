@@ -43,6 +43,9 @@ class DeviceController extends Controller
 
         $client = $request->query('client');
         $client = is_string($client) ? mb_substr(trim($client), 0, 80) : '';
+        if (str_starts_with($client, 'Mozilla/') || $client === 'unknown') {
+            $client = 'your phone or computer';
+        }
 
         return view('auth.device', [
             'server' => $server,

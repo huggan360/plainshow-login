@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\OAuthClient;
 use App\Support\Audit;
+use App\Support\CloudLogout;
 use App\Support\ReturnUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class LogoutController extends Controller
             Audit::record('logout', $user->id, $user->username);
             // Refresh tokens would let an app sign the person straight back in.
             $user->tokens()->update(['revoked' => true]);
+            CloudLogout::send($user);
         }
         Auth::guard('web')->logout();
         $request->session()->invalidate();

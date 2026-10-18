@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.1.1
+## 1.1.3
 
 - Device connection approval and results use the PlainShow sign-in design for Cloud phone and desktop apps.
-- Cloud joins the shared sign-out flow.
+- Cloud joins shared sign-out with session revocation by the Login server.
 
 ## 1.1.0
 
