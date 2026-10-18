@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+- Device connection approval and results use the PlainShow sign-in design for Cloud phone and desktop apps.
+- Cloud joins the shared sign-out flow.
+
 ## 1.1.0
 
 - The sign-in page has the PlainShow glyph backdrop behind it, and glass frames (kit 1.3).

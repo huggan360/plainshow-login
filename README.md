@@ -6,6 +6,7 @@
 |---|---|
 | `/login`, `/two-factor` | Sign in, with optional TOTP |
 | `/logout?return=` | Sign out of every app (front-channel logout) |
+| `/devices/connect`, `/devices/result` | Approve Cloud phone and desktop connections with PlainShow sign-in |
 | `/reset/{token}?u=` | Set a password from an admin-issued link |
 | `/oauth/authorize`, `/oauth/token` | Authorization code flow with PKCE |
 | `/oauth/jwks`, `/.well-known/openid-configuration`, `/oauth/userinfo` | Keys, discovery, profile |

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\DeviceController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Middleware\EnsureClientAccess;
@@ -22,6 +23,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::match(['get', 'post'], '/logout', LogoutController::class)->name('logout');
+Route::get('/devices/connect', [DeviceController::class, 'connect'])->name('devices.connect');
+Route::get('/devices/result', [DeviceController::class, 'result'])->name('devices.result');
 
 // Only the authorize endpoint lives here (it needs the session). Token, JWKS
 // and userinfo are in routes/api.php. Passport's client and token management
