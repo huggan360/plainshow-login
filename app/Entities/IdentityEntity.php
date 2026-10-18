@@ -49,7 +49,7 @@ class IdentityEntity implements IdentityEntityInterface
             'ps_pi_user' => $user->pi_username,
             // The Nextcloud account to sign in as: a linked existing account,
             // otherwise one named after the PlainShow username.
-            'ps_cloud_uid' => self::cloudUid($user),
+            'ps_cloud_uid' => in_array('cloud', $access['services'], true) ? self::cloudUid($user) : null,
         ], fn ($value) => $value !== null);
     }
 

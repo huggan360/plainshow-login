@@ -16,7 +16,7 @@ class DeviceConnectionTest extends TestCase
 
     private function account(): User
     {
-        $user = new User(['username' => 'tester']);
+        $user = new User(['username' => 'tester', 'role' => 'member']);
         $user->id = 42;
         return $user;
     }
@@ -35,6 +35,7 @@ class DeviceConnectionTest extends TestCase
 
     public function test_device_approval_uses_a_fixed_cloud_action_and_checks_the_account(): void
     {
+        DB::table('core_linked_accounts')->insert(['user_id' => 42, 'provider' => 'nextcloud', 'external_id' => 'tester']);
         $this->actingAs($this->account());
         $this->get('/devices/connect?'.http_build_query($this->requestParameters()))
             ->assertOk()
@@ -60,5 +61,12 @@ class DeviceConnectionTest extends TestCase
         $this->get('/devices/connect?'.http_build_query($this->requestParameters(['flow' => 'v1', 'account' => 'legacy-user'])))
             ->assertOk()
             ->assertSee('https://cloud.plainshow.se/index.php/login/flow');
+    }
+
+    public function test_device_approval_requires_a_linked_cloud_account(): void
+    {
+        $this->actingAs($this->account());
+        $this->get('/devices/connect?'.http_build_query($this->requestParameters()))
+            ->assertRedirect('/devices/result?status=unavailable');
     }
 }

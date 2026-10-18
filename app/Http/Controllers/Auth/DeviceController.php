@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use App\Support\PlatformAccess;
 
 class DeviceController extends Controller
 {
@@ -35,6 +36,9 @@ class DeviceController extends Controller
         }
 
         $user = Auth::user();
+        if (! PlatformAccess::canUseClient($user, 'cloud')) {
+            return redirect()->route('devices.result', ['status' => 'unavailable']);
+        }
         $linked = DB::table('core_linked_accounts')->where('user_id', $user->id)->where('provider', 'nextcloud')->value('external_id');
         $expected = is_string($linked) && $linked !== '' ? $linked : $user->username;
         if (! hash_equals($expected, $account)) {
@@ -63,6 +67,7 @@ class DeviceController extends Controller
         $message = match ($status) {
             'connected' => 'Your device is connected. You can close this page.',
             'account' => 'This Cloud session belongs to another account. Sign out of Cloud and try again.',
+            'unavailable' => 'No Cloud account is linked to your PlainShow account. Ask an administrator.',
             default => 'This device request expired. Return to your app and start again.',
         };
 

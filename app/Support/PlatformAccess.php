@@ -18,7 +18,7 @@ class PlatformAccess
     public static function for(User $user): array
     {
         if (! Schema::hasTable('core_extensions')) {
-            return Access::resolve($user->role, self::fallbackExtensions(), [], Access::defaultRolePatterns()[$user->role] ?? [], []);
+            return self::restrictUnavailable($user, Access::resolve($user->role, self::fallbackExtensions(), [], Access::defaultRolePatterns()[$user->role] ?? [], []));
         }
 
         $extensions = DB::table('core_extensions')->orderBy('sort')->get()->map(fn ($row) => [
@@ -39,6 +39,23 @@ class PlatformAccess
         if ($resolved['capabilities'] !== ['*']) {
             $known = DB::table('core_capabilities')->pluck('name')->all();
             $resolved['capabilities'] = Access::expand($resolved['capabilities'], $known);
+        }
+
+        return self::restrictUnavailable($user, $resolved);
+    }
+
+    private static function restrictUnavailable(User $user, array $resolved): array
+    {
+        $unavailable = [];
+        if (! Schema::hasTable('core_linked_accounts') || ! DB::table('core_linked_accounts')->where(['user_id' => $user->id, 'provider' => 'nextcloud'])->exists()) {
+            $unavailable[] = 'cloud';
+        }
+        if (! is_string($user->pi_username) || $user->pi_username === '') {
+            $unavailable[] = 'web';
+        }
+        $resolved['services'] = array_values(array_diff($resolved['services'], $unavailable));
+        if ($resolved['capabilities'] !== ['*']) {
+            $resolved['capabilities'] = array_values(array_filter($resolved['capabilities'], fn (string $capability) => ! in_array(strstr($capability, '.', true), $unavailable, true)));
         }
 
         return $resolved;

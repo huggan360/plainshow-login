@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+
+- Refuse Cloud and Web sign-in when no corresponding account is linked; device approval follows the same rule.
+
 ## 1.1.3
 
 - Device connection approval and results use the PlainShow sign-in design for Cloud phone and desktop apps.

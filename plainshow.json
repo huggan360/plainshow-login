@@ -3,7 +3,7 @@
     "name": "Login",
     "description": "Single sign-on for every PlainShow app.",
     "icon": "bx-lock-alt",
-    "version": "0.1.0",
+    "version": "1.1.4",
     "url": "https://login.plainshow.se",
     "system": true,
     "health": "/up",
