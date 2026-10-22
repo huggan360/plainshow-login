@@ -50,6 +50,7 @@ class IdentityEntity implements IdentityEntityInterface
             // The Nextcloud account to sign in as: a linked existing account,
             // otherwise one named after the PlainShow username.
             'ps_cloud_uid' => in_array('cloud', $access['services'], true) ? self::cloudUid($user) : null,
+            'ps_groups' => in_array('cloud', $access['services'], true) ? self::groups($user) : [],
         ], fn ($value) => $value !== null);
     }
 
@@ -63,5 +64,20 @@ class IdentityEntity implements IdentityEntityInterface
         }
 
         return $user->username;
+    }
+
+    private static function groups(User $user): array
+    {
+        if (! Schema::hasTable('core_groups') || ! Schema::hasTable('core_group_members')) {
+            return [];
+        }
+
+        return DB::table('core_group_members as member')
+            ->join('core_groups as groups', 'groups.id', '=', 'member.group_id')
+            ->where('member.user_id', $user->id)
+            ->orderBy('groups.id')
+            ->get(['groups.id', 'groups.name'])
+            ->map(fn ($group) => ['gid' => 'ps-'.$group->id, 'displayName' => $group->name])
+            ->all();
     }
 }

@@ -21,7 +21,7 @@ class ImportBlogUsers extends Command
 
     protected $description = 'Import the blog (woc) accounts into PlainShow';
 
-    private const ROLES = [5 => 'admin', 4 => 'moderator', 1 => 'member'];
+    private const ROLES = [5 => 'admin', 4 => 'moderator', 1 => 'user'];
 
     public function handle(): int
     {
@@ -45,7 +45,7 @@ class ImportBlogUsers extends Command
 
                 continue;
             }
-            $role = self::ROLES[(int) $row->access_level] ?? 'member';
+            $role = self::ROLES[(int) $row->access_level] ?? 'user';
             $this->line(sprintf('%s %d %s as %s', $this->option('dry-run') ? 'Would import' : 'Importing', $row->user_id, $username, $role));
             if ($this->option('dry-run')) {
                 continue;

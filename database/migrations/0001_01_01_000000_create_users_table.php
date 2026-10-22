@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('first_name', 60)->default('');
             $table->string('last_name', 60)->default('');
             $table->string('password');
-            $table->string('role', 16)->default('member')->index();
+            $table->string('role', 16)->default('user')->index();
             $table->string('status', 16)->default('active');
             $table->string('avatar_path')->nullable();
             $table->string('phone', 32)->nullable();

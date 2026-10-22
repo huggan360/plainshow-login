@@ -17,8 +17,12 @@ class PlatformAccess
     /** @return array{services: list<string>, capabilities: list<string>} */
     public static function for(User $user): array
     {
+        if (! $user->isActive()) {
+            return ['services' => [], 'capabilities' => []];
+        }
+
         if (! Schema::hasTable('core_extensions')) {
-            return self::restrictUnavailable($user, Access::resolve($user->role, self::fallbackExtensions(), [], Access::defaultRolePatterns()[$user->role] ?? [], []));
+            return self::restrictUnavailable($user, RoleAccess::resolve($user->role, self::fallbackExtensions(), [], Access::defaultRolePatterns()[$user->role] ?? [], []));
         }
 
         $extensions = DB::table('core_extensions')->orderBy('sort')->get()->map(fn ($row) => [
@@ -35,10 +39,13 @@ class PlatformAccess
         }
         $capabilityOverrides = DB::table('core_user_capabilities')->where('user_id', $user->id)->pluck('effect', 'capability')->all();
 
-        $resolved = Access::resolve($user->role, $extensions, $accessOverrides, $patterns, $capabilityOverrides);
+        $resolved = RoleAccess::resolve($user->role, $extensions, $accessOverrides, $patterns, $capabilityOverrides);
         if ($resolved['capabilities'] !== ['*']) {
             $known = DB::table('core_capabilities')->pluck('name')->all();
             $resolved['capabilities'] = Access::expand($resolved['capabilities'], $known);
+            $denied = array_keys(array_filter($capabilityOverrides, fn ($effect) => $effect === 'deny'));
+            $resolved['capabilities'] = array_values(array_diff($resolved['capabilities'], $denied));
+            $resolved['capabilities'] = CapabilityRules::expand($resolved['capabilities']);
         }
 
         return self::restrictUnavailable($user, $resolved);
@@ -47,9 +54,6 @@ class PlatformAccess
     private static function restrictUnavailable(User $user, array $resolved): array
     {
         $unavailable = [];
-        if (! Schema::hasTable('core_linked_accounts') || ! DB::table('core_linked_accounts')->where(['user_id' => $user->id, 'provider' => 'nextcloud'])->exists()) {
-            $unavailable[] = 'cloud';
-        }
         if (! is_string($user->pi_username) || $user->pi_username === '') {
             $unavailable[] = 'web';
         }
@@ -64,6 +68,10 @@ class PlatformAccess
     /** Whether an OAuth client (one per extension) is open to this user right now. */
     public static function canUseClient(User $user, ?string $extensionId): bool
     {
+        if (! $user->isActive()) {
+            return false;
+        }
+
         if ($extensionId === null || $extensionId === '' || $extensionId === 'core') {
             return true;
         }
@@ -74,10 +82,10 @@ class PlatformAccess
     private static function fallbackExtensions(): array
     {
         return [
-            ['id' => 'blog', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'member']],
-            ['id' => 'latex', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'member']],
+            ['id' => 'blog', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'user']],
+            ['id' => 'latex', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'user']],
             ['id' => 'web', 'enabled' => true, 'default_access' => ['admin']],
-            ['id' => 'cloud', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'member']],
+            ['id' => 'cloud', 'enabled' => true, 'default_access' => ['admin', 'moderator', 'user']],
         ];
     }
 }

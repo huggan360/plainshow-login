@@ -67,7 +67,7 @@ class DeviceController extends Controller
         $message = match ($status) {
             'connected' => 'Your device is connected. You can close this page.',
             'account' => 'This Cloud session belongs to another account. Sign out of Cloud and try again.',
-            'unavailable' => 'No Cloud account is linked to your PlainShow account. Ask an administrator.',
+            'unavailable' => 'Your PlainShow account does not have access to Cloud. Ask an administrator.',
             default => 'This device request expired. Return to your app and start again.',
         };
 

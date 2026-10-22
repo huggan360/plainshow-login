@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Support\Audit;
+use App\Support\AccountLifecycle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ class ResetPasswordController extends Controller
             throw ValidationException::withMessages(['password' => 'This reset link has expired or was already used.']);
         }
         $user = User::where('username', $data['username'])->firstOrFail();
+        AccountLifecycle::syncPassword($user, $data['password']);
         $user->forceFill(['password' => $data['password'], 'password_changed_at' => now()])->save();
         $user->tokens()->update(['revoked' => true]);
         DB::table('login_password_reset_tokens')->where('username', $user->username)->delete();

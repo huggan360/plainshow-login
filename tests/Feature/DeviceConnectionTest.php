@@ -16,7 +16,7 @@ class DeviceConnectionTest extends TestCase
 
     private function account(): User
     {
-        $user = new User(['username' => 'tester', 'role' => 'member']);
+        $user = new User(['username' => 'tester', 'role' => 'user', 'status' => 'active']);
         $user->id = 42;
         return $user;
     }
@@ -63,10 +63,11 @@ class DeviceConnectionTest extends TestCase
             ->assertSee('https://cloud.plainshow.se/index.php/login/flow');
     }
 
-    public function test_device_approval_requires_a_linked_cloud_account(): void
+    public function test_device_approval_uses_plainshow_username_without_a_link(): void
     {
         $this->actingAs($this->account());
         $this->get('/devices/connect?'.http_build_query($this->requestParameters()))
-            ->assertRedirect('/devices/result?status=unavailable');
+            ->assertOk()
+            ->assertSee('Connect device');
     }
 }

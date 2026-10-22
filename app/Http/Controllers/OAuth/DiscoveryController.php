@@ -30,7 +30,7 @@ class DiscoveryController extends Controller
             'claims_supported' => [
                 'sub', 'iss', 'aud', 'exp', 'iat', 'nonce', 'name', 'given_name', 'family_name',
                 'preferred_username', 'picture', 'email', 'email_verified', 'updated_at',
-                'ps_role', 'ps_services', 'ps_caps', 'ps_pi_user', 'ps_cloud_uid',
+                'ps_role', 'ps_services', 'ps_caps', 'ps_pi_user', 'ps_cloud_uid', 'ps_groups',
             ],
             'frontchannel_logout_supported' => true,
         ], 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
