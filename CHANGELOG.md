@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0
+
+- PlainShow's error pages.
+- AGENTS.md for developers.
+
 ## 1.1.4
 
 - Refuse Cloud and Web sign-in when no corresponding account is linked; device approval follows the same rule.
