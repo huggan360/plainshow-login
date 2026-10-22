@@ -25,7 +25,7 @@ class TwoFactorController extends Controller
     {
         $user = $this->pendingUser($request);
         if (! $user) {
-            return redirect()->route('login')->with('status', 'Your sign-in timed out. Please start again.');
+            return redirect()->route('login')->with('status', __('Your sign-in timed out. Please start again.'));
         }
         $data = $request->validate(['code' => ['required', 'string', 'max:32']]);
         $code = preg_replace('/\s+/', '', $data['code']);
@@ -54,7 +54,7 @@ class TwoFactorController extends Controller
         }
 
         Audit::record('two_factor.failed', $user->id, $user->username);
-        throw ValidationException::withMessages(['code' => 'That code is not valid.']);
+        throw ValidationException::withMessages(['code' => __('That code is not valid.')]);
     }
 
     private function pendingUser(Request $request): ?User

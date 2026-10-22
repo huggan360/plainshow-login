@@ -46,7 +46,7 @@ class LoginController extends Controller
         if (Lockout::locked($login)) {
             Audit::record('login.locked', null, $login);
             throw ValidationException::withMessages([
-                'login' => 'Too many failed attempts. Try again in '.max(1, (int) ceil(Lockout::secondsLeft($login) / 60)).' minutes.',
+                'login' => __('Too many failed attempts. Try again in :minutes minutes.', ['minutes' => max(1, (int) ceil(Lockout::secondsLeft($login) / 60))]),
             ]);
         }
 
@@ -59,11 +59,11 @@ class LoginController extends Controller
         if (! $user || ! $valid) {
             Lockout::fail($login);
             Audit::record('login.failed', $user?->id, $login);
-            throw ValidationException::withMessages(['login' => 'That username and password do not match.']);
+            throw ValidationException::withMessages(['login' => __('That username and password do not match.')]);
         }
         if (! $user->isActive()) {
             Audit::record('login.disabled', $user->id, $user->username);
-            throw ValidationException::withMessages(['login' => 'This account is disabled. Ask an administrator.']);
+            throw ValidationException::withMessages(['login' => __('This account is disabled. Ask an administrator.')]);
         }
         Lockout::clear($login);
 
@@ -82,7 +82,7 @@ class LoginController extends Controller
         }
         if ($user->role === 'admin' && config('plainshow.require_admin_two_factor')) {
             Audit::record('login.two_factor_required', $user->id, $user->username);
-            throw ValidationException::withMessages(['login' => 'Administrators need two-factor authentication. Ask another administrator to reset your access.']);
+            throw ValidationException::withMessages(['login' => __('Administrators need two-factor authentication. Ask another administrator to reset your access.')]);
         }
 
         return self::complete($request, $user, (bool) ($credentials['remember'] ?? false), 'password');

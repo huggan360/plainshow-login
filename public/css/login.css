@@ -32,3 +32,4 @@
     .auth__frame .ps-frame__panel { padding: 22px 18px; }
     .auth__frame { --ps-frame-radius: 24px; --ps-frame-pad: 8px; }
 }
+.auth__foot-tools { display: inline-flex; align-items: center; gap: 12px; }

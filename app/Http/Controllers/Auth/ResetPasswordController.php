@@ -39,7 +39,7 @@ class ResetPasswordController extends Controller
         ]);
 
         if ($this->record($data['username'], $data['token']) === null) {
-            throw ValidationException::withMessages(['password' => 'This reset link has expired or was already used.']);
+            throw ValidationException::withMessages(['password' => __('This reset link has expired or was already used.')]);
         }
         $user = User::where('username', $data['username'])->firstOrFail();
         AccountLifecycle::syncPassword($user, $data['password']);
@@ -49,7 +49,7 @@ class ResetPasswordController extends Controller
         DB::table('login_sessions')->where('user_id', $user->id)->delete();
         Audit::record('password.reset', $user->id, $user->username);
 
-        return redirect()->route('login')->with('status', 'Your password is set. Sign in with it now.');
+        return redirect()->route('login')->with('status', __('Your password is set. Sign in with it now.'));
     }
 
     private function record(string $username, string $token): ?object

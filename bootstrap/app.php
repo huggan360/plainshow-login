@@ -17,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [SecurityHeaders::class]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => rtrim((string) config('plainshow.core_url'), '/').'/');
-        $middleware->encryptCookies(except: []);
+        // The language cookie is set by scripts on every PlainShow site, so it is not encrypted.
+        $middleware->encryptCookies(except: ['ps_lang']);
+        $middleware->web(prepend: [\App\Http\Middleware\SetLanguage::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Passport asks for sign-in by throwing; send the browser to /login

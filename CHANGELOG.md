@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0
+
+- English, Dutch and Swedish: the browser's language by default, or chosen in the account menu (the choice follows you to every PlainShow site).
+
 ## v1.3.0
 
 - PlainShow's error pages.
