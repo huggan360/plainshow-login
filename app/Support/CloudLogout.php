@@ -9,18 +9,17 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Laravel\Passport\Passport;
 use PlainShow\Kit\Jwt;
+use PlainShow\Kit\Platform;
 use Throwable;
 
 class CloudLogout
 {
-    private const HOSTS = ['cloud.plainshow.se', 'cloud-staging.plainshow.se'];
-
     public static function send(User $user): void
     {
         $clients = OAuthClient::query()->where('revoked', false)->whereNotNull('frontchannel_logout_uri')->get();
         foreach ($clients as $client) {
             $host = parse_url((string) $client->frontchannel_logout_uri, PHP_URL_HOST);
-            if (! in_array($host, self::HOSTS, true)) {
+            if ($host === null || $host !== Platform::host('cloud')) {
                 continue;
             }
 
@@ -28,9 +27,6 @@ class CloudLogout
                 $token = self::token((string) $client->id, (string) $user->id);
                 $request = Http::timeout(5)->connectTimeout(2)->asForm()
                     ->withOptions(['curl' => [CURLOPT_RESOLVE => ["$host:443:127.0.0.1"]]]);
-                if ($host === 'cloud-staging.plainshow.se') {
-                    $request = $request->withoutVerifying();
-                }
                 $response = $request->post("https://$host/index.php/apps/user_oidc/backchannel-logout/PlainShow", ['logout_token' => $token]);
                 if (! $response->successful()) {
                     Log::warning('Cloud session logout failed', ['host' => $host, 'status' => $response->status()]);

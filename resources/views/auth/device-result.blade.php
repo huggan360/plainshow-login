@@ -7,7 +7,7 @@
     <div class="ps-frame auth__frame">
         <div class="ps-frame__panel auth__center">
             <p class="auth__lead">{{ $message }}</p>
-            <a class="ps-btn" href="https://cloud.plainshow.se/">{{ __('Open Cloud') }}</a>
+            <a class="ps-btn" href="{{ \PlainShow\Kit\Platform::url('cloud') }}/">{{ __('Open Cloud') }}</a>
         </div>
     </div>
 @endsection

@@ -9,21 +9,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Support\PlatformAccess;
+use PlainShow\Kit\Platform;
 
 class DeviceController extends Controller
 {
-    private const SERVERS = [
-        'cloud.plainshow.se' => 'https://cloud.plainshow.se',
-        'cloud-staging.plainshow.se' => 'https://cloud-staging.plainshow.se',
-    ];
-
     public function connect(Request $request): View|RedirectResponse
     {
         if (! Auth::check()) {
             return redirect()->route('login', ['return' => $request->fullUrl()]);
         }
 
-        $server = self::SERVERS[$request->query('server', '')] ?? null;
+        // Only this PlainShow's Cloud may ask for a device password.
+        $server = Platform::installed('cloud') && $request->query('server') === Platform::host('cloud') ? Platform::url('cloud') : null;
         $flow = $request->query('flow');
         $state = $request->query('state');
         $token = $request->query('requesttoken');

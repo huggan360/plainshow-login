@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Vite;
+use PlainShow\Kit\Platform;
 use Symfony\Component\HttpFoundation\Response;
 
 /** Strict headers for every login page. Scripts need a per-request nonce. */
@@ -20,17 +21,18 @@ class SecurityHeaders
         $response = $next($request);
 
         // The logout page frames every PlainShow app to sign them out too.
-        $frames = "frame-src https://plainshow.se https://*.plainshow.se";
+        $apps = implode(' ', array_values(Platform::urls()));
+        $frames = "frame-src $apps";
         $response->headers->set('Content-Security-Policy', implode('; ', [
             "default-src 'self'",
             "script-src 'self' 'nonce-$nonce'",
             "style-src 'self' 'nonce-$nonce'",
-            "img-src 'self' data: https://plainshow.se",
+            "img-src 'self' data: ".Platform::require('core'),
             "font-src 'self'",
             "connect-src 'self'",
             $frames,
             "frame-ancestors 'none'",
-            "form-action 'self' https://plainshow.se https://*.plainshow.se".($request->is('devices/connect') ? ' nc:' : ''),
+            "form-action 'self' $apps".($request->is('devices/connect') ? ' nc:' : ''),
             "base-uri 'none'",
             "object-src 'none'",
         ]));

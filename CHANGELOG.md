@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+
+- Every address comes from the platform file (kit 1.12): where people may return to, the apps the sign-out page reaches, Cloud's device sign-in and sign-out. The staging Cloud is gone from the code.
+
 ## v1.4.2
 
 - Background: large soft orange blobs that fade in, drift and fade out, lighting only the glyphs (kit 1.10).
