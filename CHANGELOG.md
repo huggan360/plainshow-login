@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.1
+
+- The backdrop's light is as gentle in every theme colour as in orange (kit 1.13.1).
+
 ## v1.6.0
 
 - The sign-in pages follow the theme colour chosen in the dashboard (kit 1.13): Bree Serif titles and dark grey text in the light theme.
