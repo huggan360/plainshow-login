@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.0
+
+- The sign-in pages follow the theme colour chosen in the dashboard (kit 1.13): Bree Serif titles and dark grey text in the light theme.
+
 ## v1.5.0
 
 - Every address comes from the platform file (kit 1.12): where people may return to, the apps the sign-out page reaches, Cloud's device sign-in and sign-out. The staging Cloud is gone from the code.
